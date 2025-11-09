@@ -1,7 +1,7 @@
 <template>
   <div
     ref="container"
-    class="container relative bg-gray-900 mx-auto text-gray-100"
+    class="container relative bg-gray-800 mx-auto text-gray-100"
     style="max-width: 960px"
   >
     <Modal
@@ -68,7 +68,7 @@
       />
     </transition>
 <div class="px-4">
-  <div class="pt-8 mb-16">
+  <div class="pt-2 mb-4">
     <img
       src="~assets/images/DBB_WHITE.svg"
       alt="DB&B Philippines Logo"
