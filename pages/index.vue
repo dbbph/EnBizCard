@@ -1146,6 +1146,7 @@ export default {
           // },
         ],
         secondaryActions: [
+          /*
           // todo: Fix Instagram gradient icon preview
           {
             name: 'Instagram',
@@ -1509,6 +1510,7 @@ export default {
             light: 1,
             label: 'Buy me a coffee username',
           },
+          */
         ], 
       },
       featured: [
