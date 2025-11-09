@@ -25,11 +25,10 @@
           md:hidden
         "
       >
-        <img
-          class="w-16 m-4"
-          src="~assets/images/DBB_WHITE.svg"
-          alt="DB&B Logo"
-        >
+        <div
+          class="logo w-16 m-4"
+          v-html="require(`~/assets/icons/logo.svg?include`)"
+        ></div>
         <button
           class="
             p-3
@@ -69,13 +68,36 @@
       />
     </transition>
 
-<div class="pt-8 mb-16">
-  <img 
-    src="~assets/images/DBB_WHITE.svg" 
-    alt="DB&B Philippines Logo"
-    class="w-48 mx-auto md:mx-0"
-  >
-</div>
+    <div class="px-4">
+      <div class="flex items-start justify-between pt-8">
+        <div
+          class="logo w-24"
+          v-html="require(`~/assets/icons/logo.svg?include`)"
+          title="EnBizCard - An Open-Source Digital Business Card Generator"
+        ></div>
+        <a
+          class="
+            font-extrabold
+            tracking-wide
+            leading-none
+            shrink-0
+            p-3
+            border-2
+            text-white
+            border-gray-700
+            rounded
+            hover:bg-gray-700
+            focus:bg-gray-700
+            transition-colors
+            duration-200
+          "
+          href="https://www.vishnuraghav.com/donate"
+          target="_blank"
+          rel="noreferrer"
+          >Donate</a
+        >
+      </div>
+   
     </div>
     <div class="md:grid md:grid-cols-2">
       <div class="px-4 mt-32">
