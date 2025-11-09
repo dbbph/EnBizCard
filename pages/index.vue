@@ -1,8 +1,8 @@
 <template>
   <div
     ref="container"
-    class="container relative bg-gray-800 mx-auto text-gray-100"
-    style="max-width: 960px"
+    class="container relative mx-auto text-gray-100"
+    :style="{ 'max-width': '960px', 'background-color': '#2c2c2c' }">
   >
     <Modal
       v-if="content"
@@ -77,7 +77,7 @@
   </div>
 </div>
     <div class="md:grid md:grid-cols-2">
-      <div class="px-4 mt-32">
+      <div class="px-4">
         <div ref="create" id="step-1" class="pt-8">
           <h2 class="font-extrabold text-2xl">Header attachments</h2>
           <div class="stepC">
