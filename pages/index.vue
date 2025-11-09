@@ -68,7 +68,6 @@
         :pubKeyIsValid="pubKeyIsValid"
       />
     </transition>
-
 <div class="pt-8 mb-16">
   <img 
     src="~assets/images/DBB_WHITE.svg" 
