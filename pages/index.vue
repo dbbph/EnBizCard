@@ -72,8 +72,8 @@
       <div class="flex items-start justify-between pt-8">
         <div
           class="logo w-24"
-          v-html="require(`~/assets/icons/logo.svg?include`)"
-          title="EnBizCard - An Open-Source Digital Business Card Generator"
+          v-html="require(`~/assets/images/DBB_WHITE.svg`)"
+          title="DBBPH EnBizCard Generator"
         ></div>
         <a
           class="
