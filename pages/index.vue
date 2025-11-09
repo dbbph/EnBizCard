@@ -368,24 +368,6 @@
                 filteredAction('filteredPrimaryActions', 'primaryActions')
               "
             />
-            <p class="p-3" v-if="filteredPrimaryActions.length < 1">
-              Can't find an action? Please
-              <a
-                href="#help"
-                class="
-                  cursor-pointer
-                  underline
-                  font-extrabold
-                  text-emerald-600
-                  hover:text-emerald-500
-                  focus:text-emerald-500
-                  transition-colors
-                  duration-200
-                "
-                >leave your suggestion</a
-              >
-              on Telegram
-            </p>
             <div class="stepC actions">
               <button
                 v-for="(action, index) in filteredPrimaryActions"
@@ -470,24 +452,6 @@
                 filteredAction('filteredSecondaryActions', 'secondaryActions')
               "
             />
-            <p class="p-3" v-if="filteredSecondaryActions.length < 1">
-              Can't find an action? Please
-              <a
-                href="#help"
-                class="
-                  cursor-pointer
-                  underline
-                  font-extrabold
-                  text-emerald-600
-                  hover:text-emerald-500
-                  focus:text-emerald-500
-                  transition-colors
-                  duration-200
-                "
-                >leave your suggestion</a
-              >
-              on Telegram
-            </p>
             <div class="stepC actions">
               <button
                 v-for="(action, index) in filteredSecondaryActions"
@@ -967,10 +931,10 @@ export default {
         },
       },
       genInfo: {
-        fname: null,
-        lname: null,
+        fname: 'Name",
+        lname: 'Surname',
         pronouns: null,
-        title: null,
+        title: 'My title',
         biz: 'DB&B Philippines',
         addr: '2602 Alveo Financial Tower 6794 Ayala Ave Makati 1226',
         desc: 'Singapore | China | Philippines | Thailand',
