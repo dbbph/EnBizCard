@@ -1238,7 +1238,7 @@ export default {
           //   isURL: 1,
           // },
         ],
-        secondaryActions: [
+        secondaryActions: [], //
           /*
           // todo: Fix Instagram gradient icon preview
           {
@@ -1604,7 +1604,7 @@ export default {
             label: 'Buy me a coffee username',
           },
           */
-        ], 
+        ], //
       },
       featured: [
         {
