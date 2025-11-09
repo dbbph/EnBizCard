@@ -922,7 +922,7 @@ export default {
           openPalette: false,
         },
         buttonBg: {
-          color: `#14a3c7`,
+          color: `ffffff`,
           openPalette: false,
         },
         cardBg: {
