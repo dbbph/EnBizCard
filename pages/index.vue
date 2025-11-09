@@ -67,38 +67,15 @@
         :pubKeyIsValid="pubKeyIsValid"
       />
     </transition>
-
-    <div class="px-4">
-      <div class="flex items-start justify-between pt-8">
-        <div
-          class="logo w-24"
-          v-html="require(`~/assets/images/DBB_WHITE.svg`)"
-          title="DBBPH EnBizCard Generator"
-        ></div>
-        <a
-          class="
-            font-extrabold
-            tracking-wide
-            leading-none
-            shrink-0
-            p-3
-            border-2
-            text-white
-            border-gray-700
-            rounded
-            hover:bg-gray-700
-            focus:bg-gray-700
-            transition-colors
-            duration-200
-          "
-          href="https://www.vishnuraghav.com/donate"
-          target="_blank"
-          rel="noreferrer"
-          >Donate</a
-        >
-      </div>
-   
-    </div>
+<div class="px-4">
+  <div class="pt-8 mb-16">
+    <img
+      src="~assets/images/DBB_WHITE.svg"
+      alt="DB&B Philippines Logo"
+      class="w-48 mx-auto md:mx-0"
+    >
+  </div>
+</div>
     <div class="md:grid md:grid-cols-2">
       <div class="px-4 mt-32">
         <div ref="create" id="step-1" class="pt-8">
