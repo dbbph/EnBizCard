@@ -25,11 +25,9 @@
           md:hidden
         "
       >
-        <img
-          class="w-16 m-4"
-          src="~assets/images/DBB_WHITE.svg"
-          alt="DB&B Logo"
-        >
+        <div class="logo w-16 m-4"
+        v-html="require(`~/assets/icons/logo.svg?include`)"
+        ></div>
         <button
           class="
             p-3
@@ -71,7 +69,7 @@
 <div class="pt-8 mb-16">
   <img 
     src="~assets/images/DBB_WHITE.svg" 
-    alt="DB&B Philippines Logo"
+    alt="DBB Philippines Logo"
     class="w-48 mx-auto md:mx-0"
   >
 </div>
