@@ -1209,37 +1209,35 @@ export default {
             label: 'Email address',
             order: 4,
           },
-          /*
-          {
-            name: 'Home',
-            icon: 'call',
-            href: 'tel:',
-            placeholder: '+XX XXXXX XXXXX',
-            value: null,
-            label: 'Home number',
-            order: 2,
-            isURL: 0,
-          },
-          {
-            name: 'SMS',
-            icon: 'sms',
-            href: 'sms:',
-            placeholder: '+XX XXXXX XXXXX',
-            value: null,
-            label: 'SMS mobile number',
-            order: 3,
-            isURL: 0,
-          },
-          {
-            name: 'Store',
-            icon: 'store',
-            placeholder: 'https://example.com/storeID',
-            value: null,
-            label: 'Online Store URL',
-            order: 6,
-            isURL: 1,
-          },
-          */
+          // {
+          //   name: 'Home',
+          //   icon: 'call',
+          //   href: 'tel:',
+          //   placeholder: '+XX XXXXX XXXXX',
+          //   value: null,
+          //   label: 'Home number',
+          //   order: 2,
+          //   isURL: 0,
+          // },
+          // {
+          //   name: 'SMS',
+          //   icon: 'sms',
+          //   href: 'sms:',
+          //   placeholder: '+XX XXXXX XXXXX',
+          //   value: null,
+          //   label: 'SMS mobile number',
+          //   order: 3,
+          //   isURL: 0,
+          // },
+          // {
+          //   name: 'Store',
+          //   icon: 'store',
+          //   placeholder: 'https://example.com/storeID',
+          //   value: null,
+          //   label: 'Online Store URL',
+          //   order: 6,
+          //   isURL: 1,
+          // },
           {
             name: 'Viber',
             icon: 'viber',
@@ -1270,17 +1268,16 @@ export default {
             order: 9,
             isURL: 1,
           },
-          /*
-          {
-            name: 'Matrix',
-            icon: 'matrix',
-            href: 'https://matrix.to/#/',
-            placeholder: '@username:matrix.org',
-            value: null,
-            label: 'Matrix userID',
-            order: 10,
-            isURL: 1,
-          },*/
+          // {
+          //   name: 'Matrix',
+          //   icon: 'matrix',
+          //   href: 'https://matrix.to/#/',
+          //   placeholder: '@username:matrix.org',
+          //   value: null,
+          //   label: 'Matrix userID',
+          //   order: 10,
+          //   isURL: 1,
+          // },
           {
             name: 'WhatsApp',
             icon: 'whatsapp',
@@ -1329,18 +1326,16 @@ export default {
             order: 17,
             isURL: 1,
           },
-          /*
-          {
-            name: 'XMPP',
-            icon: 'xmpp',
-            href: 'xmpp:',
-            placeholder: 'XMPP ID',
-            value: null,
-            label: 'XMPP ID',
-            order: 18,
-            isURL: 1,
-          },
-          */
+          // {
+          //   name: 'XMPP',
+          //   icon: 'xmpp',
+          //   href: 'xmpp:',
+          //   placeholder: 'XMPP ID',
+          //   value: null,
+          //   label: 'XMPP ID',
+          //   order: 18,
+          //   isURL: 1,
+          // },
           // {
           //   name: 'IRC',
           //   icon: 'irc',
@@ -1352,7 +1347,8 @@ export default {
           //   isURL: 1,
           // },
         ],
-        secondaryActions: []
+        secondaryActions: [
+          /*
           // todo: Fix Instagram gradient icon preview
           {
             name: 'Instagram',
@@ -1716,9 +1712,10 @@ export default {
             light: 1,
             label: 'Buy me a coffee username',
           },
+          */
         ], 
       },
-      featured: []
+      featured: [
         {
           title: null,
           content: [],
