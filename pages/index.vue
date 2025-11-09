@@ -931,10 +931,10 @@ export default {
         },
       },
       genInfo: {
-        fname: 'Name",
-        lname: 'Surname',
+        fname: null,
+        lname: null,
         pronouns: null,
-        title: 'My title',
+        title: null,
         biz: 'DB&B Philippines',
         addr: '2602 Alveo Financial Tower 6794 Ayala Ave Makati 1226',
         desc: 'Singapore | China | Philippines | Thailand',
