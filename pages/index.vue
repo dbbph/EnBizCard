@@ -580,73 +580,6 @@
             </p>
           </div>
         </div>
-        <div id="step-6" class="mt-16">
-          <h2 class="font-extrabold text-2xl">Footer credit</h2>
-          <div class="stepC mt-6">
-            <div class="flex items-center">
-              <div
-                class="
-                  relative
-                  group
-                  inline-block
-                  w-24
-                  h-12
-                  mr-3
-                  align-middle
-                  select-none
-                  transition
-                  duration-200
-                  ease-in
-                  bg-gray-700
-                  rounded
-                  hover:bg-gray-600
-                  focus:bg-gray-600
-                  cursor-pointer
-                  focus:outline-none
-                "
-                :class="{
-                  'bg-emerald-600 hover:bg-emerald-500 focus:bg-emerald-500':
-                    footerCredit,
-                }"
-                tabindex="0"
-                @click="footerCredit = !footerCredit"
-                @keypress.space.enter.prevent="footerCredit = !footerCredit"
-              >
-                <transition name="slide">
-                  <input
-                    type="checkbox"
-                    name="toggle"
-                    aria-label="Toggle footer credit"
-                    id="toggle"
-                    v-model="footerCredit"
-                    class="
-                      toggle-switch
-                      absolute
-                      block
-                      w-10
-                      h-10
-                      m-1
-                      rounded
-                      border-4 border-transparent
-                      appearance-none
-                      cursor-pointer
-                      transition-colors
-                      duration-200
-                      focus:outline-none
-                      bg-white
-                    "
-                    tabindex="-1"
-                  />
-                </transition>
-              </div>
-              <p>{{ footerCredit ? 'Enabled' : 'Disabled' }}</p>
-            </div>
-            <p class="mt-6 border p-4 rounded border-gray-700 text-gray-400">
-              By enabling the footer credit, you can help this project reach
-              more people.
-            </p>
-          </div>
-        </div>
         <div id="step-7" class="mt-16">
           <h2 class="font-extrabold text-2xl">Themes</h2>
           <div class="stepC mt-3 flex flex-wrap">
@@ -864,7 +797,6 @@
           :downloadChecked="downloadChecked"
           :downloadPackage="downloadPackage"
         />
-        <Help />
       </div>
       <div
         id="preview-container"
@@ -1615,7 +1547,6 @@ export default {
         },
       ],
       hostedURL: null,
-      footerCredit: false,
       PreviewMode: true,
       content: null,
       inView: false,
