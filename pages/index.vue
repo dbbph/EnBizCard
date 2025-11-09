@@ -1126,19 +1126,19 @@ export default {
       },
       colors: {
         logoBg: {
-          color: `#059669`,
+          color: `#2c2c2c`,
           openPalette: false,
         },
         mainBg: {
-          color: `#ddd`,
+          color: `#ffffff`,
           openPalette: false,
         },
         buttonBg: {
-          color: `#059669`,
+          color: `#14a3c7`,
           openPalette: false,
         },
         cardBg: {
-          color: `#fff`,
+          color: `#ffffff`,
           openPalette: false,
         },
       },
@@ -1147,15 +1147,44 @@ export default {
         lname: null,
         pronouns: null,
         title: null,
-        biz: null,
-        addr: null,
-        desc: null,
+        biz: 'DB&B Philippines',
+        addr: '2602 Alveo Financial Tower 6794 Ayala Ave Makati 1226',
+        desc: 'Singapore | China | Philippines | Thailand',
         key: null,
         tracker: null,
-        fontLink: null,
-        fontCss: null,
+        fontLink: '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">',
+        fontCss: 'font-family: "Jost", sans-serif; font-optical-sizing: auto; font-weight: 400; font-style: normal;',
       },
-      primaryActions: [],
+      primaryActions: [
+          {
+            name: 'Office',
+            icon: 'call',
+            href: 'tel:',
+            placeholder: '+XX XXXXX XXXXX',
+            value: '+63 2 7745 8800',
+            label: 'Office number',
+            order: 1,
+            isURL: 0,
+          },
+          {
+            name: 'Website',
+            icon: 'website',
+            placeholder: 'https://example.com',
+            value: 'https://www.dbb.com',
+            label: 'Website URL',
+            order: 5,
+            isURL: 1,
+          },
+          {
+            name: 'Location',
+            icon: 'location',
+            placeholder: 'https://osm.org/go/location',
+            value: 'https://maps.app.goo.gl/9JPriTcXZixMACVn9',
+            label: 'Map location URL',
+            order: 7,
+            isURL: 1,
+          },
+      ],
       filterPrimary: '',
       secondaryActions: [],
       filterSecondary: '',
@@ -1165,22 +1194,22 @@ export default {
             name: 'Mobile',
             icon: 'call',
             href: 'tel:',
-            placeholder: '+XX XXXXX XXXXX',
+            placeholder: '+63 988 888 8888',
             value: null,
             label: 'Mobile number',
             order: 0,
             isURL: 0,
           },
           {
-            name: 'Office',
-            icon: 'call',
-            href: 'tel:',
-            placeholder: '+XX XXXXX XXXXX',
+            name: 'Email',
+            icon: 'email',
+            href: 'mailto:',
+            placeholder: 'name@dbb.com.ph',
             value: null,
-            label: 'Office number',
-            order: 1,
-            isURL: 0,
+            label: 'Email address',
+            order: 4,
           },
+          /*
           {
             name: 'Home',
             icon: 'call',
@@ -1202,24 +1231,6 @@ export default {
             isURL: 0,
           },
           {
-            name: 'Email',
-            icon: 'email',
-            href: 'mailto:',
-            placeholder: 'info@example.com',
-            value: null,
-            label: 'Email address',
-            order: 4,
-          },
-          {
-            name: 'Website',
-            icon: 'website',
-            placeholder: 'https://example.com',
-            value: null,
-            label: 'Website URL',
-            order: 5,
-            isURL: 1,
-          },
-          {
             name: 'Store',
             icon: 'store',
             placeholder: 'https://example.com/storeID',
@@ -1228,16 +1239,17 @@ export default {
             order: 6,
             isURL: 1,
           },
+          */
           {
-            name: 'Location',
-            icon: 'location',
-            placeholder: 'https://osm.org/go/location',
+            name: 'Viber',
+            icon: 'viber',
+            href: 'viber://chat?number=',
+            placeholder: 'XX XXXXX XXXXX',
             value: null,
-            label: 'Map location URL',
-            order: 7,
+            label: 'Viber mobile number',
+            order: 15,
             isURL: 1,
           },
-
           {
             name: 'Signal',
             icon: 'signal',
@@ -1258,6 +1270,7 @@ export default {
             order: 9,
             isURL: 1,
           },
+          /*
           {
             name: 'Matrix',
             icon: 'matrix',
@@ -1267,7 +1280,7 @@ export default {
             label: 'Matrix userID',
             order: 10,
             isURL: 1,
-          },
+          },*/
           {
             name: 'WhatsApp',
             icon: 'whatsapp',
@@ -1288,17 +1301,6 @@ export default {
             isURL: 1,
           },
           {
-            name: 'Skype',
-            icon: 'skype',
-            href: 'skype:',
-            hrefEnd: '?chat',
-            placeholder: 'username',
-            value: null,
-            label: 'Skype username',
-            order: 13,
-            isURL: 1,
-          },
-          {
             name: 'Line',
             icon: 'line',
             href: 'https://line.me/ti/p/',
@@ -1306,16 +1308,6 @@ export default {
             value: null,
             label: 'Line profile ID',
             order: 14,
-            isURL: 1,
-          },
-          {
-            name: 'Viber',
-            icon: 'viber',
-            href: 'viber://chat?number=',
-            placeholder: 'XX XXXXX XXXXX',
-            value: null,
-            label: 'Viber mobile number',
-            order: 15,
             isURL: 1,
           },
           {
@@ -1337,6 +1329,7 @@ export default {
             order: 17,
             isURL: 1,
           },
+          /*
           {
             name: 'XMPP',
             icon: 'xmpp',
@@ -1347,6 +1340,7 @@ export default {
             order: 18,
             isURL: 1,
           },
+          */
           // {
           //   name: 'IRC',
           //   icon: 'irc',
@@ -1358,6 +1352,7 @@ export default {
           //   isURL: 1,
           // },
         ],
+        /*
         secondaryActions: [
           // todo: Fix Instagram gradient icon preview
           {
@@ -1722,7 +1717,7 @@ export default {
             light: 1,
             label: 'Buy me a coffee username',
           },
-        ],
+        ], */
       },
       featured: [
         {
