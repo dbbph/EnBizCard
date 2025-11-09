@@ -3,7 +3,6 @@
     ref="container"
     class="container relative mx-auto text-gray-100"
     :style="{ 'max-width': '960px', 'background-color': '#2c2c2c' }">
-  >
     <Modal
       v-if="content"
       @click.native.self="clearContent"
