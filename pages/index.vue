@@ -55,7 +55,7 @@
         :images="images"
         :featured="featured"
         :colors="colors"
-        :primaryActions="primaryActions"
+        :primaryActions="allActions"
         :secondaryActions="secondaryActions"
         :PreviewMode="PreviewMode"
         :downloadVcard="downloadVcard"
@@ -613,7 +613,7 @@
                 :images="images"
                 :featured="featured"
                 :colors="colors"
-                :primaryActions="primaryActions"
+                :primaryActions="allActions"
                 :secondaryActions="secondaryActions"
                 :PreviewMode="PreviewMode"
                 :downloadVcard="downloadVcard"
@@ -769,8 +769,6 @@ export default {
       filterSecondary: '',
       actions: {
         primaryActions: [
-           // Removed Office, Website, Location from here so they aren't duplicated since they are hardcoded
-           // Kept other actions for user to add if needed
           {
             name: 'Viber',
             icon: 'viber',
@@ -905,39 +903,48 @@ export default {
         e.name.toLowerCase().includes(this.filterSecondary.toLowerCase())
       )
     },
+    // NEW: Combines editable and fixed actions for the preview
+    allActions() {
+      let editable = this.primaryActions;
+      let fixed = [
+        {
+          name: 'Office',
+          icon: 'call',
+          value: '+63 2 7745 8800',
+          href: 'tel:',
+          isURL: 0,
+        },
+        {
+          name: 'Website',
+          icon: 'website',
+          value: 'https://www.dbb.com',
+          isURL: 1,
+        },
+        {
+          name: 'Location',
+          icon: 'location',
+          value: 'https://maps.app.goo.gl/9JPriTcXZixMACVn9',
+          isURL: 1,
+        }
+      ];
+      return [...editable, ...fixed];
+    },
     vCard() {
       const getNumber = (type) => {
-        let no = this.primaryActions
+        let no = this.allActions
           .map((e) => (e.name == type ? e.value : null))
           .filter((e) => e)[0]
         return no ? no.replace(/\s/g, '') : null
       }
-      let email = this.primaryActions
+      let email = this.allActions
         .map((e) => (e.name == 'Email' ? e.value : null))
         .filter((e) => e)[0]
       
-      // Mix user added actions AND our hardcoded fixed actions
       let actions = [
-        ...this.primaryActions,
+        ...this.allActions,
         ...this.secondaryActions.map((e) => {
           return { ...e, isURL: 1 }
         }),
-        // Manually inject fixed actions for vCard generation
-        {
-            name: 'Office',
-            value: '+63 2 7745 8800',
-            isURL: 0,
-        },
-        {
-            name: 'Website',
-            value: 'https://www.dbb.com',
-            isURL: 1,
-        },
-        {
-            name: 'Location',
-            value: 'https://maps.app.goo.gl/9JPriTcXZixMACVn9',
-            isURL: 1,
-        }
       ]
       let urls = actions
         .map((e) => {
@@ -964,12 +971,12 @@ export default {
         org: this.genInfo.biz,
         addr: this.genInfo.addr,
         cell: getNumber('Mobile'),
-        work: '+63 2 7745 8800', // Hardcoded work number
+        work: getNumber('Office'),
         home: getNumber('Home'),
         sms: getNumber('SMS'),
         email,
         hostedURL: this.hostedURL,
-        website: 'https://www.dbb.com', // Hardcoded website
+        website: 'https://www.dbb.com',
         urls,
         key,
         note,
