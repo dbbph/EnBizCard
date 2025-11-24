@@ -66,15 +66,15 @@
         :pubKeyIsValid="pubKeyIsValid"
       />
     </transition>
-<div class="px-4">
-  <div class="pt-2 mb-4">
-    <img
-      src="~assets/images/DBB_WHITE.svg"
-      alt="DB&B Philippines Logo"
-      class="w-48 mx-auto md:mx-0"
-    >
-  </div>
-</div>
+    <div class="px-4">
+      <div class="pt-2 mb-4">
+        <img
+          src="~assets/images/DBB_WHITE.svg"
+          alt="DB&B Philippines Logo"
+          class="w-48 mx-auto md:mx-0"
+        >
+      </div>
+    </div>
     <div class="md:grid md:grid-cols-2">
       <div class="px-4">
         <div ref="create" id="step-1" class="pt-8">
@@ -165,8 +165,6 @@
             </div>
           </div>
           
-          <!-- Gender Pronouns Removed -->
-
           <div class="stepC mt-6">
             <label for="job-title" class="ml-4">Job title</label>
             <input
@@ -197,7 +195,6 @@
               spellcheck="false"
               type="text"
               v-model="genInfo.biz"
-              autocapitalize="words"
               readonly
               class="
                 mt-2
@@ -209,8 +206,7 @@
                 border border-transparent
                 transition-colors
                 duration-200
-                focus:outline-none focus:border-gray-600
-                hover:border-gray-600
+                focus:outline-none
                 opacity-50
                 cursor-not-allowed
               "
@@ -220,7 +216,7 @@
             <label for="business-address" class="ml-4">Business address</label>
             <textarea
               id="business-address"
-              :value="genInfo.addr"
+              v-model="genInfo.addr"
               readonly
               class="
                 block
@@ -233,13 +229,12 @@
                 border border-transparent
                 transition-colors
                 duration-200
-                focus:outline-none focus:border-gray-600
+                focus:outline-none
                 resize-none
-                hover:border-gray-600
                 opacity-50
                 cursor-not-allowed
               "
-              rows="4"
+              rows="2"
             ></textarea>
           </div>
           <div class="stepC mt-6">
@@ -248,7 +243,7 @@
             </label>
             <textarea
               id="business-description"
-              :value="genInfo.desc"
+              v-model="genInfo.desc"
               readonly
               class="
                 block
@@ -261,191 +256,35 @@
                 border border-transparent
                 transition-colors
                 duration-200
-                focus:outline-none focus:border-gray-600
+                focus:outline-none
                 resize-none
-                hover:border-gray-600
                 opacity-50
                 cursor-not-allowed
               "
               rows="4"
             ></textarea>
           </div>
-          
-          <!-- OpenPGP Removed -->
-
         </div>
         <div id="step-3" class="mt-16">
           <h2 class="font-extrabold text-2xl">Primary actions</h2>
-          <draggable
-            v-model="primaryActions"
-            handle=".drag"
-            animation="1"
-            ghostClass="ghost"
-          >
-            <transition-group type="transition" name="list">
-              <Action
-                v-for="(item, index) in primaryActions"
-                :key="'item' + index"
-                name="primaryActions"
-                :type="primaryActions"
-                :item="item"
-                :index="index"
-                :buttonBg="colors.buttonBg.color"
-                :removeAction="removeAction"
-              />
-            </transition-group>
-          </draggable>
-          <div
-            class="mt-6 border-gray-800"
-            :class="{ 'border-t pt-6': primaryActions.length }"
-          >
-            <input
-              spellcheck="false"
-              type="text"
-              v-model="filterPrimary"
-              placeholder="Search an action"
-              class="
-                px-4
-                mb-2
-                w-full
-                h-12
-                bg-black
-                placeholder-gray-600
-                rounded
-                border border-transparent
-                transition-colors
-                duration-200
-                focus:outline-none focus:border-gray-600
-                hover:border-gray-600
-              "
-              @keydown.esc="clearFilterActions"
-              @keypress.enter="
-                filteredAction('filteredPrimaryActions', 'primaryActions')
-              "
-            />
-            <div class="stepC actions">
-              <button
-                v-for="(action, index) in filteredPrimaryActions"
-                :key="index"
-                @click="addAction('primaryActions', action.name)"
-                class="
-                  p-3
-                  flex
-                  items-center
-                  shrink-0
-                  rounded
-                  hover:bg-gray-600
-                  focus:bg-gray-600
-                  transition-colors
-                  duration-200
-                  focus:outline-none
-                  bg-gray-700
-                "
-                :title="
-                  action.name.substr(0, 1).toUpperCase() + action.name.slice(1)
-                "
-                :aria-label="action.name"
-              >
-                <div
-                  class="w-6 h-6 mr-3 shrink-0"
-                  v-html="require(`~/assets/icons/${action.icon}.svg?include`)"
-                ></div>
-                <p class="whitespace-nowrap">
-                  {{
-                    action.name.substr(0, 1).toUpperCase() +
-                    action.name.slice(1)
-                  }}
-                </p>
-              </button>
+          
+          <div class="stepC">
+            <div v-for="(action, index) in primaryActions" :key="index" class="mt-6">
+               <label class="ml-4">{{ action.label }}</label>
+               <div class="flex items-center mt-2 w-full h-12 bg-black rounded overflow-hidden opacity-75 cursor-not-allowed">
+                  <div class="w-12 h-full flex items-center justify-center bg-gray-800">
+                     <div class="w-5 h-5" v-html="require(`~/assets/icons/${action.icon}.svg?include`)"></div>
+                  </div>
+                  <input 
+                    type="text" 
+                    :value="action.value" 
+                    readonly 
+                    class="px-4 w-full h-full bg-black text-gray-400 focus:outline-none cursor-not-allowed"
+                  />
+               </div>
             </div>
           </div>
-        </div>
 
-        <div id="step-4" class="mt-16" v-if="showSecondaryActions">
-          <h2 class="font-extrabold text-2xl">Secondary actions</h2>
-          <draggable
-            v-model="secondaryActions"
-            handle=".drag"
-            animation="1"
-            ghostClass="ghost"
-          >
-            <transition-group type="transition" name="list">
-              <Action
-                v-for="(item, index) in secondaryActions"
-                :key="'item' + index"
-                name="secondaryActions"
-                :type="secondaryActions"
-                :item="item"
-                :index="index"
-                :removeAction="removeAction"
-              /> </transition-group
-          ></draggable>
-          <div
-            class="mt-6 border-gray-800"
-            :class="{ 'border-t pt-6': secondaryActions.length }"
-          >
-            <input
-              spellcheck="false"
-              type="text"
-              v-model="filterSecondary"
-              placeholder="Search an action"
-              class="
-                px-4
-                mb-2
-                w-full
-                h-12
-                bg-black
-                placeholder-gray-600
-                rounded
-                border border-transparent
-                transition-colors
-                duration-200
-                focus:outline-none focus:border-gray-600
-                hover:border-gray-600
-              "
-              @keydown.esc="clearFilterActions"
-              @keypress.enter="
-                filteredAction('filteredSecondaryActions', 'secondaryActions')
-              "
-            />
-            <div class="stepC actions">
-              <button
-                v-for="(action, index) in filteredSecondaryActions"
-                :key="index"
-                @click="addAction('secondaryActions', action.name)"
-                class="
-                  p-3
-                  flex
-                  items-center
-                  shrink-0
-                  rounded
-                  hover:brightness-125
-                  focus:brightness-125
-                  transition-all
-                  duration-200
-                  focus:outline-none
-                "
-                :style="{ background: action.color }"
-                :title="
-                  action.name.substr(0, 1).toUpperCase() + action.name.slice(1)
-                "
-              >
-                <div
-                  class="w-6 h-6 mr-3 shrink-0"
-                  v-html="require(`~/assets/icons/${action.icon}.svg?include`)"
-                ></div>
-                <p
-                  class="whitespace-nowrap"
-                  :class="{ 'text-gray-900': action.light }"
-                >
-                  {{
-                    action.name.substr(0, 1).toUpperCase() +
-                    action.name.slice(1)
-                  }}
-                </p>
-              </button>
-            </div>
-          </div>
         </div>
 
         <div id="step-5" class="mt-16">
@@ -500,9 +339,8 @@
         </div>
         <div id="step-7" class="mt-16">
           <h2 class="font-extrabold text-2xl">Themes</h2>
-          <div class="stepC mt-3 flex flex-wrap">
+          <div class="stepC mt-3 flex flex-wrap opacity-50 pointer-events-none grayscale">
             <button
-              @click="changeTheme(1)"
               class="
                 w-12
                 h-12
@@ -511,19 +349,13 @@
                 mr-3
                 font-extrabold
                 focus:outline-none
-                transition-colors
-                duration-200
-              "
-              :class="
-                theme == 1
-                  ? 'bg-emerald-600'
-                  : 'bg-gray-700 hover:bg-gray-600 focus:bg-gray-600'
+                cursor-not-allowed
+                bg-emerald-600
               "
             >
               A
             </button>
             <button
-              @click="changeTheme(2)"
               class="
                 w-12
                 h-12
@@ -532,19 +364,13 @@
                 mr-3
                 font-extrabold
                 focus:outline-none
-                transition-colors
-                duration-200
-              "
-              :class="
-                theme == 2
-                  ? 'bg-emerald-600'
-                  : 'bg-gray-700 hover:bg-gray-600 focus:bg-gray-600'
+                cursor-not-allowed
+                bg-gray-700
               "
             >
               B
             </button>
             <button
-              @click="changeTheme(3)"
               class="
                 w-12
                 h-12
@@ -553,13 +379,8 @@
                 mr-3
                 font-extrabold
                 focus:outline-none
-                transition-colors
-                duration-200
-              "
-              :class="
-                theme == 3
-                  ? 'bg-emerald-600'
-                  : 'bg-gray-700 hover:bg-gray-600 focus:bg-gray-600'
+                cursor-not-allowed
+                bg-gray-700
               "
             >
               C
@@ -590,6 +411,7 @@
             <textarea
               id="font-link"
               v-model="genInfo.fontLink"
+              readonly
               class="
                 block
                 mt-2
@@ -597,18 +419,17 @@
                 py-3
                 w-full
                 bg-black
-                placeholder-gray-600
                 rounded
                 border border-transparent
                 transition-colors
                 duration-200
-                focus:outline-none focus:border-gray-600
+                focus:outline-none
                 resize-none
-                hover:border-gray-600
+                opacity-50
+                cursor-not-allowed
               "
               rows="4"
               spellcheck="false"
-              :placeholder="`<link href=&quot;https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap&quot; rel=&quot;stylesheet&quot;>`"
             ></textarea>
           </div>
           <div class="stepC mt-6">
@@ -618,6 +439,7 @@
               type="text"
               id="font-css"
               v-model="genInfo.fontCss"
+              readonly
               class="
                 block
                 mt-2
@@ -625,28 +447,21 @@
                 py-3
                 w-full
                 bg-black
-                placeholder-gray-600
                 rounded
                 border border-transparent
                 transition-colors
                 duration-200
-                focus:outline-none focus:border-gray-600
+                focus:outline-none
                 resize-none
-                hover:border-gray-600
+                opacity-50
+                cursor-not-allowed
               "
-              :placeholder="`font-family: 'Poppins', sans-serif;`"
             />
           </div>
           <p class="mt-6 border p-4 rounded border-gray-700 text-gray-400">
-            Supports services such as Google Fonts, Adobe Typekit, etc. Make
-            sure to get the embed code for both regular and bold font variants
-            from the same font family.
+            Supports services such as Google Fonts, Adobe Typekit, etc.
           </p>
         </div>
-        
-        <!-- Analytics (Step 10) Removed -->
-        
-        <!-- Hosting (Step 11) Removed -->
         
         <Download
           :downloadCheckList="downloadCheckList"
@@ -767,7 +582,6 @@ export default {
 
   data() {
     return {
-      showSecondaryActions: false, // Set to true to reactivate Secondary Actions
       downloadCheckList: [
         {
           label:
@@ -827,10 +641,10 @@ export default {
       genInfo: {
         fname: null,
         lname: null,
-        pronouns: null, // Field remains in data structure to avoid errors, but input is removed
+        pronouns: null,
         title: null,
         biz: 'DB&B Philippines, Inc.',
-        addr: '26/F Alveo Financial Tower 6794 Ayala Avenue Makati City 1226',
+        addr: '26/F Alveo Financial Tower\n6794 Ayala Avenue Makati City 1226',
         desc: 'Singapore | China | Philippines | Thailand',
         key: null,
         tracker: null,
@@ -866,488 +680,13 @@ export default {
             order: 7,
             isURL: 1,
           },
-          {
-            name: 'Mobile',
-            icon: 'call',
-            href: 'tel:',
-            placeholder: '+63 988 888 8888',
-            value: '+63 900 000 0000',
-            label: 'Mobile number',
-            order: 0,
-            isURL: 0,
-          },
-          {
-            name: 'Email',
-            icon: 'email',
-            href: 'mailto:',
-            placeholder: 'name@dbb.com.ph',
-            value: 'name@dbb.com.ph',
-            label: 'Email address',
-            order: 4,
-          },
       ],
       filterPrimary: '',
-      secondaryActions: [], // Cleared out
+      secondaryActions: [],
       filterSecondary: '',
       actions: {
-        primaryActions: [
-          {
-            name: 'Mobile',
-            icon: 'call',
-            href: 'tel:',
-            placeholder: '+63 900 000 0000',
-            value: '+63 900 000 0000',
-            label: 'Mobile number',
-            order: 0,
-            isURL: 0,
-          },
-          // ... (Rest of actions list preserved for potential addition via search)
-          {
-            name: 'Viber',
-            icon: 'viber',
-            href: 'viber://chat?number=',
-            placeholder: 'XX XXXXX XXXXX',
-            value: null,
-            label: 'Viber mobile number',
-            order: 15,
-            isURL: 1,
-          },
-          {
-            name: 'Signal',
-            icon: 'signal',
-            href: 'https://signal.me/#p/',
-            placeholder: '+XXXXXXXXXXXX',
-            value: null,
-            label: 'Signal number with country code (no spaces)',
-            order: 8,
-            isURL: 1,
-          },
-          {
-            name: 'Telegram',
-            icon: 'telegram',
-            href: 'https://t.me/',
-            placeholder: 'username',
-            value: null,
-            label: 'Telegram username',
-            order: 9,
-            isURL: 1,
-          },
-          {
-            name: 'WhatsApp',
-            icon: 'whatsapp',
-            placeholder: 'https://wa.me/profileID',
-            value: null,
-            label: 'WhatsApp profile URL',
-            order: 11,
-            isURL: 1,
-          },
-          {
-            name: 'Messenger',
-            icon: 'messenger',
-            href: 'https://m.me/',
-            placeholder: 'username',
-            value: null,
-            label: 'Messenger username',
-            order: 12,
-            isURL: 1,
-          },
-          {
-            name: 'Line',
-            icon: 'line',
-            href: 'https://line.me/ti/p/',
-            placeholder: 'LINE ID',
-            value: null,
-            label: 'Line profile ID',
-            order: 14,
-            isURL: 1,
-          },
-          {
-            name: 'WeChat',
-            icon: 'wechat',
-            href: 'weixin://dl/chat?',
-            placeholder: 'WeChat ID',
-            value: null,
-            label: 'WeChat profile ID',
-            order: 16,
-            isURL: 1,
-          },
-          {
-            name: 'Calendar',
-            icon: 'calendar',
-            placeholder: 'https://example.com/calendarID',
-            value: null,
-            label: 'Calendar URL',
-            order: 17,
-            isURL: 1,
-          },
-        ],
-        secondaryActions: [
-          /*
-          // todo: Fix Instagram gradient icon preview
-          {
-            name: 'Instagram',
-            icon: 'instagram',
-            href: 'https://instagram.com/',
-            placeholder: 'username',
-            value: null,
-            color: '#ffffff',
-            light: 1,
-            gradientIcon: 1,
-            label: 'Instagram username',
-          },
-          */
-          {
-            name: 'Threads',
-            icon: 'threads',
-            href: 'https://www.threads.net/',
-            placeholder: '@username',
-            value: null,
-            color: '#000000',
-            label: 'Threads username',
-          },
-          {
-            name: 'Pixelfed',
-            icon: 'pixelfed',
-            placeholder: 'https://pixelfed.social/username',
-            value: null,
-            color: '#8d59a8',
-            label: 'Pixelfed profile URL',
-          },
-          {
-            name: 'Facebook',
-            icon: 'facebook',
-            href: 'https://facebook.com/',
-            placeholder: 'username or pagename',
-            value: null,
-            color: '#1877f2',
-            label: 'Facebook username or pagename',
-          },
-          {
-            name: 'Diaspora',
-            icon: 'diaspora',
-            placeholder: 'https://diaspora.social/username',
-            value: null,
-            color: '#000000',
-            label: 'Diaspora profile URL',
-          },
-          {
-            name: 'Friendica',
-            icon: 'friendica',
-            placeholder: 'https://friendica.social/username',
-            value: null,
-            color: '#1d6e9a',
-            label: 'Friendica profile URL',
-          },
-          {
-            name: 'Twitter',
-            icon: 'twitter',
-            href: 'https://twitter.com/',
-            placeholder: 'username',
-            value: null,
-            color: '#1da1f2',
-            label: 'Twitter username',
-          },
-          {
-            name: 'Mastodon',
-            icon: 'mastodon',
-            placeholder: 'https://mastodon.social/@username',
-            value: null,
-            color: '#2b90d9',
-            label: 'Mastodon profile URL',
-          },
-          {
-            name: 'LinkedIn',
-            icon: 'linkedin',
-            href: 'https://linkedin.com/',
-            placeholder: 'in/username or company/companyname',
-            value: null,
-            color: '#0077b5',
-            label: 'Linkedin username or companyname',
-          },
-          {
-            name: 'YouTube',
-            icon: 'youtube',
-            href: 'https://youtube.com/',
-            placeholder: 'channel name or ID',
-            value: null,
-            color: '#ff0000',
-            label: 'Youtube channel name or ID',
-          },
-          {
-            name: 'Vimeo',
-            icon: 'vimeo',
-            href: 'https://vimeo.com/',
-            placeholder: 'channelname',
-            value: null,
-            color: '#1ab7ea',
-            label: 'Vimeo channelname',
-          },
-          {
-            name: 'Peertube',
-            icon: 'peertube',
-            placeholder: 'https://peertube.video/channelname',
-            value: null,
-            color: '#ffffff',
-            light: 1,
-            label: 'Peertube channel URL',
-          },
-          {
-            name: 'Pinterest',
-            icon: 'pinterest',
-            href: 'https://pinterest.com/',
-            placeholder: 'username',
-            value: null,
-            color: '#bd081c',
-            label: 'Pinterest username',
-          },
-          {
-            name: 'Behance',
-            icon: 'behance',
-            href: 'https://behance.net/',
-            placeholder: 'username',
-            value: null,
-            color: '#1769ff',
-            label: 'Behance username',
-          },
-          {
-            name: 'Dribbble',
-            icon: 'dribbble',
-            href: 'https://dribbble.com/',
-            placeholder: 'username',
-            value: null,
-            color: '#ea4c89',
-            label: 'Dribbble username',
-          },
-          {
-            name: 'Reddit',
-            icon: 'reddit',
-            href: 'https://reddit.com/',
-            placeholder: 'username',
-            value: null,
-            color: '#ff5700',
-            label: 'Reddit username',
-          },
-          {
-            name: 'VK',
-            icon: 'vk',
-            href: 'https://vk.com/',
-            placeholder: 'pagename',
-            value: null,
-            color: '#4a76a8',
-            label: 'VK page URL',
-          },
-          {
-            name: 'Snapchat',
-            icon: 'snapchat',
-            href: 'https://www.snapchat.com/add/',
-            placeholder: 'username',
-            value: null,
-            color: '#fffc00',
-            light: 1,
-            label: 'Snapchat username',
-          },
-          {
-            name: 'Tumblr',
-            icon: 'tumblr',
-            href: 'https://',
-            hrefEnd: '.tumblr.com/',
-            placeholder: 'username',
-            value: null,
-            color: '#2c4762',
-            label: 'Tumblr blog URL',
-          },
-          {
-            name: 'Quora',
-            icon: 'quora',
-            href: 'https://quora.com/',
-            placeholder: 'username',
-            value: null,
-            color: '#a82400',
-            label: 'Quora username',
-          },
-          {
-            name: 'Medium',
-            icon: 'medium',
-            placeholder: 'https://medium.com/publication_name',
-            value: null,
-            color: '#000000',
-            label: 'Medium publication',
-          },
-          {
-            name: 'Discord',
-            icon: 'discord',
-            placeholder: 'https://discord.gg/invitecode',
-            value: null,
-            color: '#7289da',
-            label: 'Discord channel invite link',
-          },
-          {
-            name: 'Twitch',
-            icon: 'twitch',
-            href: 'https://twitch.tv/',
-            placeholder: 'username',
-            value: null,
-            color: '#9146ff',
-            label: 'Twitch username',
-          },
-          {
-            name: 'Spotify',
-            icon: 'spotify',
-            href: 'https://open.spotify.com/user/',
-            placeholder: 'username',
-            value: null,
-            color: '#1ed760',
-            label: 'Spotify username',
-          },
-          {
-            name: 'Soundcloud',
-            icon: 'soundcloud',
-            href: 'https://soundcloud.com/',
-            placeholder: 'username',
-            value: null,
-            color: '#ff3300',
-            label: 'Soundcloud username',
-          },
-          {
-            name: 'Funkwhale',
-            icon: 'funkwhale',
-            placeholder: 'https://funkwhale.audio/username',
-            value: null,
-            color: '#ffffff',
-            light: 1,
-            label: 'Funkwhale username',
-          },
-          {
-            name: 'GitHub',
-            icon: 'github',
-            href: 'https://github.com/',
-            placeholder: 'username',
-            value: null,
-            color: '#333',
-            label: 'Github username',
-          },
-          {
-            name: 'GitLab',
-            icon: 'gitlab',
-            href: 'https://gitlab.com/',
-            placeholder: 'username',
-            value: null,
-            color: '#171321 ',
-            label: 'Gitlab username',
-          },
-          {
-            name: 'Codeberg',
-            icon: 'codeberg',
-            href: 'https://codeberg.org/',
-            placeholder: 'username',
-            value: null,
-            color: '#2185d0',
-            label: 'Codeberg username',
-          },
-          {
-            name: 'Yelp',
-            icon: 'yelp',
-            href: 'https://yelp.com/',
-            placeholder: 'bizname',
-            value: null,
-            color: '#fff',
-            light: 1,
-            label: 'Yelp pagename',
-          },
-          {
-            name: 'PayPal',
-            icon: 'paypal',
-            href: 'https://paypal.me/',
-            placeholder: 'username',
-            value: null,
-            color: '#003087',
-            label: 'PayPal.me URL',
-          },
-          {
-            name: 'Patreon',
-            icon: 'patreon',
-            href: 'https://patreon.com/',
-            placeholder: 'username',
-            value: null,
-            color: '#FF424D',
-            label: 'Patreon URL',
-          },
-          {
-            name: 'Open-Collective',
-            icon: 'open-collective',
-            href: 'https://opencollective.com/',
-            placeholder: 'projectname',
-            value: null,
-            color: '#fff',
-            light: 1,
-            label: 'Open Collective projectname',
-          },
-          {
-            name: 'TikTok',
-            icon: 'tiktok',
-            href: 'https://tiktok.com/',
-            placeholder: 'username',
-            value: null,
-            color: '#fff',
-            light: 1,
-            label: 'TikTok username',
-          },
-          {
-            name: 'Cash App',
-            icon: 'cashapp',
-            href: 'https://cash.app/',
-            placeholder: '$username',
-            value: null,
-            color: '#fff',
-            light: 1,
-            label: 'Cash App username',
-          },
-          {
-            name: 'Siilo',
-            icon: 'siilo',
-            href: 'https://app.siilo.com/qr/',
-            placeholder: 'userID',
-            value: null,
-            color: '#17233b',
-            label: 'Siilo userID',
-          },
-          {
-            name: 'App Store',
-            icon: 'appstore',
-            placeholder: 'https://apps.apple.com/in/app/appname/id',
-            value: null,
-            color: 'linear-gradient(#5fc9f8, #147efb)',
-            label: 'App Store developer/app URL',
-          },
-          {
-            name: 'Play Store',
-            icon: 'playstore',
-            placeholder: 'https://play.google.com/store/apps/details?id=',
-            value: null,
-            color: '#fff',
-            light: 1,
-            label: 'Play Store developer/app URL',
-          },
-          {
-            name: 'ArtStation',
-            icon: 'artstation',
-            href: 'https://www.artstation.com/',
-            placeholder: 'username',
-            value: null,
-            color: '#171717',
-            label: 'ArtStation username',
-          },
-          {
-            name: 'Buy me a coffee',
-            icon: 'buymeacoffee',
-            href: 'https://www.buymeacoffee.com/',
-            placeholder: 'username',
-            value: null,
-            color: '#ffdd00',
-            light: 1,
-            label: 'Buy me a coffee username',
-          },
-        ],
+        primaryActions: [],
+        secondaryActions: [], 
       },
       featured: [
         {
@@ -1372,15 +711,7 @@ export default {
       return (fn + ln).length ? `${fn ? fn : ''}${ln ? ' ' + ln : ''}` : null
     },
     pubKeyIsValid() {
-      if (this.genInfo.key) {
-        if (!this.genInfo.key.match(/^(-----BEGIN PGP PUBLIC KEY BLOCK-----)/))
-          return false
-
-        if (!this.genInfo.key.match(/(-----END PGP PUBLIC KEY BLOCK-----)$/))
-          return false
-
-        return true
-      } else return false
+      return false
     },
     downloadChecked() {
       return this.downloadCheckList.filter((e) => e.checked).length == 3
@@ -1389,26 +720,6 @@ export default {
       return this.getFullname
         ? this.getFullname.toLowerCase().replace(/\W+/g, '')
         : 'username'
-    },
-    orderedPrimaryActions() {
-      return this.actions.primaryActions.sort((a, b) =>
-        a.order > b.order ? 1 : a.order < b.order ? -1 : 0
-      )
-    },
-    filteredPrimaryActions() {
-      return this.orderedPrimaryActions.filter((e) =>
-        e.name.toLowerCase().includes(this.filterPrimary.toLowerCase())
-      )
-    },
-    orderedSecondaryActions() {
-      return this.actions.secondaryActions.sort((a, b) =>
-        a.name.localeCompare(b.name)
-      )
-    },
-    filteredSecondaryActions() {
-      return this.orderedSecondaryActions.filter((e) =>
-        e.name.toLowerCase().includes(this.filterSecondary.toLowerCase())
-      )
     },
     vCard() {
       const getNumber = (type) => {
@@ -1445,7 +756,7 @@ export default {
       let note = this.genInfo.desc
         ? this.genInfo.desc.replace(/[\r\n]+/gm, '')
         : null
-      let key = this.pubKeyIsValid ? window.btoa(this.genInfo.key) : null
+      let key = null
       let randomNumber = Math.floor(100000000 + Math.random() * 900000)
       return {
         fn: this.genInfo.fname,
@@ -1549,13 +860,7 @@ export default {
       saveAs(window.URL.createObjectURL(blob), `${this.username}.vcf`)
     },
     downloadKey() {
-      let blob = new Blob([this.genInfo.key], {
-        type: 'text/plain',
-      })
-      saveAs(
-        window.URL.createObjectURL(blob),
-        `${this.getFullname}'s public key.asc`
-      )
+      // Disabled functionality
     },
     async resizeImage(type, mime, index1, index2) {
       let vm = this
@@ -1628,14 +933,6 @@ export default {
       reader.readAsDataURL(file)
     },
     getTrackingCode() {
-      let regex = /<script[^<]*<\/script>/g
-      let tracker = this.genInfo.tracker
-      if (regex.test(tracker)) {
-        let scripts = tracker.match(regex)
-        let temp = document.createElement('div')
-        temp.innerHTML = tracker
-        return scripts.length && temp
-      }
       return false
     },
     downloadPackage() {
@@ -1670,10 +967,6 @@ export default {
             'let pC=document.querySelectorAll(".pCtrl"),pP=document.querySelectorAll(".playPause"),srcs=document.querySelectorAll(".source");srcs.forEach(e=>{e.style.pointerEvents="none",e.removeAttribute("controls")}),pC.forEach((e,l)=>{e.style.display="flex";let r=e.querySelector(".currentTime"),s=e.querySelector(".seekBar"),t=e.querySelector(".playPause"),a=t.querySelector(".play"),c=t.querySelector(".pause");srcs[l].addEventListener("timeupdate",()=>{let e=srcs[l].currentTime,t=100/srcs[l].duration*e;s.value=t,100==t&&(s.value=0,a.style.display="block",c.style.display="none");let o=Math.floor(e/60),y=Math.floor(e%60);o.toString().length<2&&(o="0"+o),y.toString().length<2&&(y="0"+y),r.value=o+":"+y}),s.addEventListener("change",()=>{srcs[l].currentTime=srcs[l].duration*(parseInt(s.value)/100)}),t.addEventListener("click",()=>{srcs[l].paused?(srcs.forEach((e,r)=>{l!=r&&(e.paused||e.pause())}),pP.forEach((e,l)=>{let r=e.querySelector(".play"),s=e.querySelector(".pause");r.style.display="block",s.style.display="none"}),srcs[l].play(),a.style.display="none",c.style.display="block"):(srcs[l].pause(),c.style.display="none",a.style.display="block")})});'
           if (this.featured.length)
             el.querySelector('body').appendChild(mediaHandler)
-
-          // Inject tracking scripts
-          let tracker = this.getTrackingCode()
-          while (tracker && tracker.firstChild) el.head.appendChild(tracker.firstChild)
 
           // Create blobs
           let html = new Blob(
@@ -1768,14 +1061,6 @@ export default {
             })
           }
 
-          //  Public key
-          let name = this.getFullname
-          if (this.pubKeyIsValid) {
-            zip
-              .folder(username)
-              .file(`${name}'s public key.asc`, this.genInfo.key)
-          }
-
           // VCARD
           zip.folder(username).file(`${username}.vcf`, vCard)
 
@@ -1785,7 +1070,7 @@ export default {
               type: 'blob',
             })
             .then(function (zip) {
-              saveAs(zip, `${name}'s Digital Business Card.zip`)
+              saveAs(zip, `${username}'s Digital Business Card.zip`)
             })
           this.PreviewMode = true
         }, 250)
