@@ -265,26 +265,118 @@
             ></textarea>
           </div>
         </div>
+
         <div id="step-3" class="mt-16">
           <h2 class="font-extrabold text-2xl">Primary actions</h2>
           
-          <div class="stepC">
-            <div v-for="(action, index) in primaryActions" :key="index" class="mt-6">
-               <label class="ml-4">{{ action.label }}</label>
-               <div class="flex items-center mt-2 w-full h-12 bg-black rounded overflow-hidden opacity-75 cursor-not-allowed">
+          <draggable
+            v-model="primaryActions"
+            handle=".drag"
+            animation="1"
+            ghostClass="ghost"
+          >
+            <transition-group type="transition" name="list">
+              <Action
+                v-for="(item, index) in primaryActions"
+                :key="'item' + index"
+                name="primaryActions"
+                :type="primaryActions"
+                :item="item"
+                :index="index"
+                :buttonBg="colors.buttonBg.color"
+                :removeAction="removeAction"
+              />
+            </transition-group>
+          </draggable>
+
+          <div class="stepC border-t border-gray-800 mt-6 pt-2">
+            <div class="mt-4">
+               <label class="ml-4 text-gray-500 text-sm uppercase font-bold">Fixed Company Details</label>
+               <div class="flex items-center mt-2 w-full h-12 bg-black rounded overflow-hidden opacity-60 cursor-not-allowed border border-gray-800">
                   <div class="w-12 h-full flex items-center justify-center bg-gray-800">
-                     <div class="w-5 h-5" v-html="require(`~/assets/icons/${action.icon}.svg?include`)"></div>
+                     <div class="w-5 h-5" v-html="require(`~/assets/icons/call.svg?include`)"></div>
                   </div>
-                  <input 
-                    type="text" 
-                    :value="action.value" 
-                    readonly 
-                    class="px-4 w-full h-full bg-black text-gray-400 focus:outline-none cursor-not-allowed"
-                  />
+                  <input type="text" value="+63 2 7745 8800" readonly class="px-4 w-full h-full bg-black text-gray-400 focus:outline-none cursor-not-allowed"/>
+               </div>
+               <div class="flex items-center mt-4 w-full h-12 bg-black rounded overflow-hidden opacity-60 cursor-not-allowed border border-gray-800">
+                  <div class="w-12 h-full flex items-center justify-center bg-gray-800">
+                     <div class="w-5 h-5" v-html="require(`~/assets/icons/website.svg?include`)"></div>
+                  </div>
+                  <input type="text" value="https://www.dbb.com" readonly class="px-4 w-full h-full bg-black text-gray-400 focus:outline-none cursor-not-allowed"/>
+               </div>
+               <div class="flex items-center mt-4 w-full h-12 bg-black rounded overflow-hidden opacity-60 cursor-not-allowed border border-gray-800">
+                  <div class="w-12 h-full flex items-center justify-center bg-gray-800">
+                     <div class="w-5 h-5" v-html="require(`~/assets/icons/location.svg?include`)"></div>
+                  </div>
+                  <input type="text" value="https://maps.app.goo.gl/9JPriTcXZixMACVn9" readonly class="px-4 w-full h-full bg-black text-gray-400 focus:outline-none cursor-not-allowed"/>
                </div>
             </div>
           </div>
 
+          <div
+            class="mt-6 border-gray-800"
+            :class="{ 'border-t pt-6': primaryActions.length }"
+          >
+            <input
+              spellcheck="false"
+              type="text"
+              v-model="filterPrimary"
+              placeholder="Search an action"
+              class="
+                px-4
+                mb-2
+                w-full
+                h-12
+                bg-black
+                placeholder-gray-600
+                rounded
+                border border-transparent
+                transition-colors
+                duration-200
+                focus:outline-none focus:border-gray-600
+                hover:border-gray-600
+              "
+              @keydown.esc="clearFilterActions"
+              @keypress.enter="
+                filteredAction('filteredPrimaryActions', 'primaryActions')
+              "
+            />
+            <div class="stepC actions">
+              <button
+                v-for="(action, index) in filteredPrimaryActions"
+                :key="index"
+                @click="addAction('primaryActions', action.name)"
+                class="
+                  p-3
+                  flex
+                  items-center
+                  shrink-0
+                  rounded
+                  hover:bg-gray-600
+                  focus:bg-gray-600
+                  transition-colors
+                  duration-200
+                  focus:outline-none
+                  bg-gray-700
+                "
+                :title="
+                  action.name.substr(0, 1).toUpperCase() + action.name.slice(1)
+                "
+                :aria-label="action.name"
+              >
+                <div
+                  class="w-6 h-6 mr-3 shrink-0"
+                  v-html="require(`~/assets/icons/${action.icon}.svg?include`)"
+                ></div>
+                <p class="whitespace-nowrap">
+                  {{
+                    action.name.substr(0, 1).toUpperCase() +
+                    action.name.slice(1)
+                  }}
+                </p>
+              </button>
+            </div>
+          </div>
         </div>
 
         <div id="step-5" class="mt-16">
@@ -644,7 +736,7 @@ export default {
         pronouns: null,
         title: null,
         biz: 'DB&B Philippines, Inc.',
-        addr: '26/F Alveo Financial Tower\n6794 Ayala Avenue Makati City 1226',
+        addr: '26F Alveo Financial Tower\n6794 Ayala Ave Makati 1226',
         desc: 'Singapore | China | Philippines | Thailand',
         key: null,
         tracker: null,
@@ -653,39 +745,111 @@ export default {
       },
       primaryActions: [
           {
-            name: 'Office',
+            name: 'Mobile',
             icon: 'call',
             href: 'tel:',
-            placeholder: '+XX XXXXX XXXXX',
-            value: '+63 2 7745 8800',
-            label: 'Office number',
-            order: 1,
+            placeholder: '+63 900 000 0000',
+            value: '+63 900 000 0000',
+            label: 'Mobile number',
+            order: 0,
             isURL: 0,
           },
           {
-            name: 'Website',
-            icon: 'website',
-            placeholder: 'https://example.com',
-            value: 'https://www.dbb.com',
-            label: 'Website URL',
-            order: 5,
-            isURL: 1,
-          },
-          {
-            name: 'Location',
-            icon: 'location',
-            placeholder: 'https://osm.org/go/location',
-            value: 'https://maps.app.goo.gl/9JPriTcXZixMACVn9',
-            label: 'Map location URL',
-            order: 7,
-            isURL: 1,
+            name: 'Email',
+            icon: 'email',
+            href: 'mailto:',
+            placeholder: 'name@dbb.com.ph',
+            value: 'name@dbb.com.ph',
+            label: 'Email address',
+            order: 4,
           },
       ],
       filterPrimary: '',
       secondaryActions: [],
       filterSecondary: '',
       actions: {
-        primaryActions: [],
+        primaryActions: [
+           // Removed Office, Website, Location from here so they aren't duplicated since they are hardcoded
+           // Kept other actions for user to add if needed
+          {
+            name: 'Viber',
+            icon: 'viber',
+            href: 'viber://chat?number=',
+            placeholder: 'XX XXXXX XXXXX',
+            value: null,
+            label: 'Viber mobile number',
+            order: 15,
+            isURL: 1,
+          },
+          {
+            name: 'Signal',
+            icon: 'signal',
+            href: 'https://signal.me/#p/',
+            placeholder: '+XXXXXXXXXXXX',
+            value: null,
+            label: 'Signal number with country code (no spaces)',
+            order: 8,
+            isURL: 1,
+          },
+          {
+            name: 'Telegram',
+            icon: 'telegram',
+            href: 'https://t.me/',
+            placeholder: 'username',
+            value: null,
+            label: 'Telegram username',
+            order: 9,
+            isURL: 1,
+          },
+          {
+            name: 'WhatsApp',
+            icon: 'whatsapp',
+            placeholder: 'https://wa.me/profileID',
+            value: null,
+            label: 'WhatsApp profile URL',
+            order: 11,
+            isURL: 1,
+          },
+          {
+            name: 'Messenger',
+            icon: 'messenger',
+            href: 'https://m.me/',
+            placeholder: 'username',
+            value: null,
+            label: 'Messenger username',
+            order: 12,
+            isURL: 1,
+          },
+          {
+            name: 'Line',
+            icon: 'line',
+            href: 'https://line.me/ti/p/',
+            placeholder: 'LINE ID',
+            value: null,
+            label: 'Line profile ID',
+            order: 14,
+            isURL: 1,
+          },
+          {
+            name: 'WeChat',
+            icon: 'wechat',
+            href: 'weixin://dl/chat?',
+            placeholder: 'WeChat ID',
+            value: null,
+            label: 'WeChat profile ID',
+            order: 16,
+            isURL: 1,
+          },
+          {
+            name: 'Calendar',
+            icon: 'calendar',
+            placeholder: 'https://example.com/calendarID',
+            value: null,
+            label: 'Calendar URL',
+            order: 17,
+            isURL: 1,
+          },
+        ],
         secondaryActions: [], 
       },
       featured: [
@@ -721,6 +885,26 @@ export default {
         ? this.getFullname.toLowerCase().replace(/\W+/g, '')
         : 'username'
     },
+    orderedPrimaryActions() {
+      return this.actions.primaryActions.sort((a, b) =>
+        a.order > b.order ? 1 : a.order < b.order ? -1 : 0
+      )
+    },
+    filteredPrimaryActions() {
+      return this.orderedPrimaryActions.filter((e) =>
+        e.name.toLowerCase().includes(this.filterPrimary.toLowerCase())
+      )
+    },
+    orderedSecondaryActions() {
+      return this.actions.secondaryActions.sort((a, b) =>
+        a.name.localeCompare(b.name)
+      )
+    },
+    filteredSecondaryActions() {
+      return this.orderedSecondaryActions.filter((e) =>
+        e.name.toLowerCase().includes(this.filterSecondary.toLowerCase())
+      )
+    },
     vCard() {
       const getNumber = (type) => {
         let no = this.primaryActions
@@ -731,14 +915,29 @@ export default {
       let email = this.primaryActions
         .map((e) => (e.name == 'Email' ? e.value : null))
         .filter((e) => e)[0]
-      let website = this.primaryActions
-        .map((e) => (e.name == 'Website' ? e.value : null))
-        .filter((e) => e)[0]
+      
+      // Mix user added actions AND our hardcoded fixed actions
       let actions = [
         ...this.primaryActions,
         ...this.secondaryActions.map((e) => {
           return { ...e, isURL: 1 }
         }),
+        // Manually inject fixed actions for vCard generation
+        {
+            name: 'Office',
+            value: '+63 2 7745 8800',
+            isURL: 0,
+        },
+        {
+            name: 'Website',
+            value: 'https://www.dbb.com',
+            isURL: 1,
+        },
+        {
+            name: 'Location',
+            value: 'https://maps.app.goo.gl/9JPriTcXZixMACVn9',
+            isURL: 1,
+        }
       ]
       let urls = actions
         .map((e) => {
@@ -765,12 +964,12 @@ export default {
         org: this.genInfo.biz,
         addr: this.genInfo.addr,
         cell: getNumber('Mobile'),
-        work: getNumber('Office'),
+        work: '+63 2 7745 8800', // Hardcoded work number
         home: getNumber('Home'),
         sms: getNumber('SMS'),
         email,
         hostedURL: this.hostedURL,
-        website,
+        website: 'https://www.dbb.com', // Hardcoded website
         urls,
         key,
         note,
