@@ -268,28 +268,8 @@
 
         <div id="step-3" class="mt-16">
           <h2 class="font-extrabold text-2xl">Primary actions</h2>
-          
-          <draggable
-            v-model="primaryActions"
-            handle=".drag"
-            animation="1"
-            ghostClass="ghost"
-          >
-            <transition-group type="transition" name="list">
-              <Action
-                v-for="(item, index) in primaryActions"
-                :key="'item' + index"
-                name="primaryActions"
-                :type="primaryActions"
-                :item="item"
-                :index="index"
-                :buttonBg="colors.buttonBg.color"
-                :removeAction="removeAction"
-              />
-            </transition-group>
-          </draggable>
 
-          <div class="stepC border-t border-gray-800 mt-6 pt-2">
+          <div class="stepC mt-6 mb-6">
             <div class="mt-4">
                <label class="ml-4 text-gray-500 text-sm uppercase font-bold">Fixed Company Details</label>
                <div class="flex items-center mt-2 w-full h-12 bg-black rounded overflow-hidden opacity-60 cursor-not-allowed border border-gray-800">
@@ -312,6 +292,27 @@
                </div>
             </div>
           </div>
+          
+          <draggable
+            v-model="primaryActions"
+            handle=".drag"
+            animation="1"
+            ghostClass="ghost"
+            class="border-t border-gray-800 pt-4"
+          >
+            <transition-group type="transition" name="list">
+              <Action
+                v-for="(item, index) in primaryActions"
+                :key="'item' + index"
+                name="primaryActions"
+                :type="primaryActions"
+                :item="item"
+                :index="index"
+                :buttonBg="colors.buttonBg.color"
+                :removeAction="removeAction"
+              />
+            </transition-group>
+          </draggable>
 
           <div
             class="mt-6 border-gray-800"
@@ -428,131 +429,6 @@
               Supported media formats: jpeg, png, mp3, mp4, webm and pdf
             </p>
           </div>
-        </div>
-        <div id="step-7" class="mt-16">
-          <h2 class="font-extrabold text-2xl">Themes</h2>
-          <div class="stepC mt-3 flex flex-wrap opacity-50 pointer-events-none grayscale">
-            <button
-              class="
-                w-12
-                h-12
-                rounded
-                mt-3
-                mr-3
-                font-extrabold
-                focus:outline-none
-                cursor-not-allowed
-                bg-emerald-600
-              "
-            >
-              A
-            </button>
-            <button
-              class="
-                w-12
-                h-12
-                rounded
-                mt-3
-                mr-3
-                font-extrabold
-                focus:outline-none
-                cursor-not-allowed
-                bg-gray-700
-              "
-            >
-              B
-            </button>
-            <button
-              class="
-                w-12
-                h-12
-                rounded
-                mt-3
-                mr-3
-                font-extrabold
-                focus:outline-none
-                cursor-not-allowed
-                bg-gray-700
-              "
-            >
-              C
-            </button>
-          </div>
-        </div>
-        <div id="step-8" class="mt-16">
-          <h2 class="font-extrabold text-2xl">Colours</h2>
-          <div class="stepC">
-            <Colour name="logoBg" label="Header background" :colors="colors" />
-            <Colour name="mainBg" label="Main background" :colors="colors" />
-            <Colour
-              name="buttonBg"
-              label="Button background"
-              :colors="colors"
-            />
-            <Colour
-              name="cardBg"
-              label="Featured content background"
-              :colors="colors"
-            />
-          </div>
-        </div>
-        <div id="step-9" class="mt-16">
-          <h2 class="font-extrabold text-2xl">Fonts</h2>
-          <div class="stepC mt-6">
-            <label for="font-link" class="ml-4">Web font embed code</label>
-            <textarea
-              id="font-link"
-              v-model="genInfo.fontLink"
-              readonly
-              class="
-                block
-                mt-2
-                px-4
-                py-3
-                w-full
-                bg-black
-                rounded
-                border border-transparent
-                transition-colors
-                duration-200
-                focus:outline-none
-                resize-none
-                opacity-50
-                cursor-not-allowed
-              "
-              rows="4"
-              spellcheck="false"
-            ></textarea>
-          </div>
-          <div class="stepC mt-6">
-            <label for="font-css" class="ml-4">Web font CSS rule</label>
-            <input
-              spellcheck="false"
-              type="text"
-              id="font-css"
-              v-model="genInfo.fontCss"
-              readonly
-              class="
-                block
-                mt-2
-                px-4
-                py-3
-                w-full
-                bg-black
-                rounded
-                border border-transparent
-                transition-colors
-                duration-200
-                focus:outline-none
-                resize-none
-                opacity-50
-                cursor-not-allowed
-              "
-            />
-          </div>
-          <p class="mt-6 border p-4 rounded border-gray-700 text-gray-400">
-            Supports services such as Google Fonts, Adobe Typekit, etc.
-          </p>
         </div>
         
         <Download
@@ -903,7 +779,7 @@ export default {
         e.name.toLowerCase().includes(this.filterSecondary.toLowerCase())
       )
     },
-    // NEW: Combines editable and fixed actions for the preview
+    // COMBINED ACTIONS: Fixed Actions appear BEFORE Editable Actions
     allActions() {
       let editable = this.primaryActions;
       let fixed = [
@@ -927,7 +803,8 @@ export default {
           isURL: 1,
         }
       ];
-      return [...editable, ...fixed];
+      // Spread fixed first, then editable
+      return [...fixed, ...editable];
     },
     vCard() {
       const getNumber = (type) => {
