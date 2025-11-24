@@ -164,31 +164,9 @@
               />
             </div>
           </div>
-          <div class="stepC mt-6">
-            <label for="pronouns" class="ml-4">Gender pronouns</label>
-            <input
-              id="pronouns"
-              spellcheck="false"
-              type="text"
-              v-model="genInfo.pronouns"
-              placeholder="He/Him/His"
-              autocapitalize="words"
-              class="
-                mt-2
-                px-4
-                w-full
-                h-12
-                bg-black
-                placeholder-gray-600
-                rounded
-                border border-transparent
-                transition-colors
-                duration-200
-                focus:outline-none focus:border-gray-600
-                hover:border-gray-600
-              "
-            />
-          </div>
+          
+          <!-- Gender Pronouns Removed -->
+
           <div class="stepC mt-6">
             <label for="job-title" class="ml-4">Job title</label>
             <input
@@ -220,6 +198,7 @@
               type="text"
               v-model="genInfo.biz"
               autocapitalize="words"
+              readonly
               class="
                 mt-2
                 px-4
@@ -232,6 +211,8 @@
                 duration-200
                 focus:outline-none focus:border-gray-600
                 hover:border-gray-600
+                opacity-50
+                cursor-not-allowed
               "
             />
           </div>
@@ -240,7 +221,7 @@
             <textarea
               id="business-address"
               :value="genInfo.addr"
-              @input="genInfo.addr = $event.target.value"
+              readonly
               class="
                 block
                 mt-2
@@ -255,6 +236,8 @@
                 focus:outline-none focus:border-gray-600
                 resize-none
                 hover:border-gray-600
+                opacity-50
+                cursor-not-allowed
               "
               rows="4"
             ></textarea>
@@ -266,7 +249,7 @@
             <textarea
               id="business-description"
               :value="genInfo.desc"
-              @input="genInfo.desc = $event.target.value"
+              readonly
               class="
                 block
                 mt-2
@@ -281,43 +264,15 @@
                 focus:outline-none focus:border-gray-600
                 resize-none
                 hover:border-gray-600
+                opacity-50
+                cursor-not-allowed
               "
               rows="4"
             ></textarea>
           </div>
-          <div class="stepC relative mt-6">
-            <label for="pgp-public-key" class="flex justify-between ml-4"
-              >OpenPGP public key<span
-                v-if="genInfo.key"
-                class="mr-4"
-                :class="pubKeyIsValid ? 'text-emerald-500' : 'text-red-600'"
-                >{{ pubKeyIsValid ? 'Valid' : 'Invalid schema' }}</span
-              >
-            </label>
-            <textarea
-              id="pgp-public-key"
-              v-model="genInfo.key"
-              class="
-                block
-                mt-2
-                px-4
-                py-3
-                w-full
-                bg-black
-                placeholder-gray-600
-                rounded
-                border border-transparent
-                transition-colors
-                duration-200
-                focus:outline-none focus:border-gray-600
-                resize-none
-                hover:border-gray-600
-              "
-              rows="4"
-              spellcheck="false"
-              placeholder="Paste public key block here"
-            ></textarea>
-          </div>
+          
+          <!-- OpenPGP Removed -->
+
         </div>
         <div id="step-3" class="mt-16">
           <h2 class="font-extrabold text-2xl">Primary actions</h2>
@@ -405,7 +360,8 @@
             </div>
           </div>
         </div>
-        <div id="step-4" class="mt-16">
+
+        <div id="step-4" class="mt-16" v-if="showSecondaryActions">
           <h2 class="font-extrabold text-2xl">Secondary actions</h2>
           <draggable
             v-model="secondaryActions"
@@ -490,9 +446,8 @@
               </button>
             </div>
           </div>
-          <!-- class="stepC actions mt-6 border-gray-800"
-            :class="{ 'border-t pt-6': secondaryActions.length }" -->
         </div>
+
         <div id="step-5" class="mt-16">
           <h2 class="font-extrabold text-2xl">Featured content</h2>
           <div class="stepC">
@@ -688,73 +643,11 @@
             from the same font family.
           </p>
         </div>
-        <div id="step-10" class="mt-16">
-          <h2 class="font-extrabold text-2xl">Analytics</h2>
-          <div class="stepC mt-6">
-            <label for="tracking-code" class="ml-4">Tracking code</label>
-            <textarea
-              id="tracking-code"
-              aria-label="tracking-code"
-              v-model="genInfo.tracker"
-              class="
-                block
-                mt-2
-                px-4
-                py-3
-                w-full
-                bg-black
-                placeholder-gray-600
-                rounded
-                border border-transparent
-                transition-colors
-                duration-200
-                focus:outline-none focus:border-gray-600
-                resize-none
-                hover:border-gray-600
-              "
-              rows="4"
-              spellcheck="false"
-              placeholder="Paste tracking code here"
-            ></textarea>
-            <p class="mt-6 border p-4 rounded border-gray-700 text-gray-400">
-              Supports services such as Clicky, Matomo, Google Analytics etc.
-            </p>
-          </div>
-        </div>
-        <div id="step-11" class="mt-16">
-          <h2 class="font-extrabold text-2xl">Hosting</h2>
-          <div class="stepC mt-6">
-            <label for="hosted-url" class="ml-4">Hosted card URL</label>
-            <input
-              spellcheck="false"
-              type="text"
-              id="hosted-url"
-              v-model="hostedURL"
-              class="
-                block
-                mt-2
-                px-4
-                py-3
-                w-full
-                bg-black
-                placeholder-gray-600
-                rounded
-                border border-transparent
-                transition-colors
-                duration-200
-                focus:outline-none focus:border-gray-600
-                resize-none
-                hover:border-gray-600
-              "
-              placeholder="https://yoursite/vcard/username"
-            />
-            <p class="mt-6 border p-4 rounded border-gray-700 text-gray-400">
-              Only paste your hosting URL if you've already decided where you
-              want to host this digital business card. If you haven't decided
-              yet, please skip this step.
-            </p>
-          </div>
-        </div>
+        
+        <!-- Analytics (Step 10) Removed -->
+        
+        <!-- Hosting (Step 11) Removed -->
+        
         <Download
           :downloadCheckList="downloadCheckList"
           :downloadChecked="downloadChecked"
@@ -874,6 +767,7 @@ export default {
 
   data() {
     return {
+      showSecondaryActions: false, // Set to true to reactivate Secondary Actions
       downloadCheckList: [
         {
           label:
@@ -933,10 +827,10 @@ export default {
       genInfo: {
         fname: null,
         lname: null,
-        pronouns: null,
+        pronouns: null, // Field remains in data structure to avoid errors, but input is removed
         title: null,
-        biz: 'DB&B Philippines',
-        addr: '26F Alveo Financial Tower 6794 Ayala Ave Makati 1226',
+        biz: 'DB&B Philippines, Inc.',
+        addr: '26/F Alveo Financial Tower 6794 Ayala Avenue Makati City 1226',
         desc: 'Singapore | China | Philippines | Thailand',
         key: null,
         tracker: null,
@@ -993,7 +887,7 @@ export default {
           },
       ],
       filterPrimary: '',
-      secondaryActions: [],
+      secondaryActions: [], // Cleared out
       filterSecondary: '',
       actions: {
         primaryActions: [
@@ -1007,35 +901,7 @@ export default {
             order: 0,
             isURL: 0,
           },
-          // {
-          //   name: 'Home',
-          //   icon: 'call',
-          //   href: 'tel:',
-          //   placeholder: '+XX XXXXX XXXXX',
-          //   value: null,
-          //   label: 'Home number',
-          //   order: 2,
-          //   isURL: 0,
-          // },
-          // {
-          //   name: 'SMS',
-          //   icon: 'sms',
-          //   href: 'sms:',
-          //   placeholder: '+XX XXXXX XXXXX',
-          //   value: null,
-          //   label: 'SMS mobile number',
-          //   order: 3,
-          //   isURL: 0,
-          // },
-          // {
-          //   name: 'Store',
-          //   icon: 'store',
-          //   placeholder: 'https://example.com/storeID',
-          //   value: null,
-          //   label: 'Online Store URL',
-          //   order: 6,
-          //   isURL: 1,
-          // },
+          // ... (Rest of actions list preserved for potential addition via search)
           {
             name: 'Viber',
             icon: 'viber',
@@ -1066,16 +932,6 @@ export default {
             order: 9,
             isURL: 1,
           },
-          // {
-          //   name: 'Matrix',
-          //   icon: 'matrix',
-          //   href: 'https://matrix.to/#/',
-          //   placeholder: '@username:matrix.org',
-          //   value: null,
-          //   label: 'Matrix userID',
-          //   order: 10,
-          //   isURL: 1,
-          // },
           {
             name: 'WhatsApp',
             icon: 'whatsapp',
@@ -1124,26 +980,6 @@ export default {
             order: 17,
             isURL: 1,
           },
-          // {
-          //   name: 'XMPP',
-          //   icon: 'xmpp',
-          //   href: 'xmpp:',
-          //   placeholder: 'XMPP ID',
-          //   value: null,
-          //   label: 'XMPP ID',
-          //   order: 18,
-          //   isURL: 1,
-          // },
-          // {
-          //   name: 'IRC',
-          //   icon: 'irc',
-          //   href: 'irc:',
-          //   placeholder: 'IRC ID',
-          //   value: null,
-          //   label: 'IRC ID',
-          //   order: 19,
-          //   isURL: 1,
-          // },
         ],
         secondaryActions: [
           /*
@@ -1159,6 +995,7 @@ export default {
             gradientIcon: 1,
             label: 'Instagram username',
           },
+          */
           {
             name: 'Threads',
             icon: 'threads',
@@ -1510,8 +1347,7 @@ export default {
             light: 1,
             label: 'Buy me a coffee username',
           },
-          */
-        ], 
+        ],
       },
       featured: [
         {
@@ -1837,7 +1673,7 @@ export default {
 
           // Inject tracking scripts
           let tracker = this.getTrackingCode()
-          while (tracker.firstChild) el.head.appendChild(tracker.firstChild)
+          while (tracker && tracker.firstChild) el.head.appendChild(tracker.firstChild)
 
           // Create blobs
           let html = new Blob(
